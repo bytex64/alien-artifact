@@ -28,5 +28,6 @@ extern Buttons buttons;
 extern int stage;
 
 void alien_print(const char *s);
+char alien_char_decode(unsigned char c);
 void clear_leds();
 void reset();

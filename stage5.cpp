@@ -17,6 +17,8 @@ void enter_stage_5() {
   led_3.set(false);
   led_4.set(false);
   led_5.set(false);
+  buttons.enableTones(true);
+  alien_print("piano");
   stage = 5;
 }
 

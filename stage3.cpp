@@ -88,8 +88,9 @@ void run_stage_3() {
             // sequence correct; increase length if we're not at the end
             if (puzzle_length == 8) {
               // PROCEED
+              delay(500);
               tone_off();
-              alien_print("you win");
+              alien_print("you win m m m m m ");
               reset();
               return;
             }

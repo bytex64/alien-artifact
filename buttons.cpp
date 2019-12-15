@@ -14,18 +14,27 @@ Buttons::Buttons() {
 }
 
 bool Buttons::debounced_read(const unsigned long t, unsigned char n) {
-  if (t - this->debounce_t0[n] < 250) {
+  if (this->debounce_t0[n] > 0 && t - this->debounce_t0[n] < 250) {
+    // within debounce period; return prior state
     return this->getState(n);
   } else {
-    this->debounce_t0[n] = t;
-    return !digitalRead(pinmap[n]);
+    bool p = !digitalRead(pinmap[n]);
+    if (bitRead(this->lastStates, n) ^ p) {
+      // pressed; begin debounce timer
+      this->debounce_t0[n] = t;
+    } else if (this->debounce_t0[n] > 0) {
+      // clear debounce timer
+      this->debounce_t0[n] = 0;
+    }
+
+    return p;
   }
 }
 
 void Buttons::update() {
-  const unsigned long now = millis();
   this->lastStates = this->states;
   if (this->debounce_enabled) {
+    const unsigned long now = millis();
     this->states =
         this->debounced_read(now, 0)
       | this->debounced_read(now, 1) << 1

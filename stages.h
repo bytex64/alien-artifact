@@ -14,3 +14,6 @@ void run_dice_mode();
 
 void enter_stage_5();
 void run_stage_5();
+
+void enter_keyboard_mode();
+void run_keyboard_mode();

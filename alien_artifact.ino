@@ -2,7 +2,7 @@
 #include "stages.h"
 
 void setup() {
-  randomSeed(analogRead(9));
+  randomSeed(analogRead(8));
   led_a.init();
   led_b.init();
   led_c.init();
@@ -22,6 +22,7 @@ void loop() {
      case 0:
       if (buttons.getState(0)) {
         const unsigned int selector = buttons.getStates() >> 1;
+        randomSeed(((unsigned long)analogRead(8) << 16) | millis());
         switch(selector) {
           case 0b00000:
           case 0b00001:
@@ -37,8 +38,10 @@ void loop() {
             enter_dice_mode();
             break;
           case 0b10000:
-            buttons.enableTones(true);
             enter_stage_5();
+            break;
+          case 0b01101:
+            enter_keyboard_mode();
             break;
         }
       }
@@ -49,6 +52,7 @@ void loop() {
     case 3: run_stage_3(); break;
     case 4: run_dice_mode(); break;
     case 5: run_stage_5(); break;
+    case 6: run_keyboard_mode(); break;
   }
 
   led_a.step();

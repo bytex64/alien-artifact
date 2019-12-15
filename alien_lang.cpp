@@ -69,3 +69,13 @@ void alien_print(const char *s) {
   digitalWrite(PIN_LED_4, LOW);
   digitalWrite(PIN_LED_5, LOW);
 }
+
+char alien_char_decode(unsigned char c) {
+  if (c == 0) {
+    return ' ';
+  } else if (c < 26) {
+    return c + 0x40;
+  } else {
+    return c + 2;
+  }
+}
